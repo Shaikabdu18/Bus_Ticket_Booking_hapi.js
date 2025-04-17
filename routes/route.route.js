@@ -1,0 +1,43 @@
+const routeController = require('../controllers/route.controller');
+const { verifyToken, isAdmin } = require('../middleware/auth.middleware');
+
+module.exports = [
+  {
+    method: 'POST',
+    path: '/routes',
+    options: {
+      pre: [verifyToken, isAdmin],
+      handler: routeController.createRoute
+    }
+  },
+  {
+    method: 'GET',
+    path: '/routes',
+    options: {
+      handler: routeController.getAllRoutes
+    }
+  },
+  {
+    method: 'GET',
+    path: '/routes/{id}',
+    options: {
+      handler: routeController.getRouteById
+    }
+  },
+  {
+    method: 'PUT',
+    path: '/routes/{id}',
+    options: {
+      pre: [verifyToken, isAdmin],
+      handler: routeController.updateRoute
+    }
+  },
+  {
+    method: 'DELETE',
+    path: '/routes/{id}',
+    options: {
+      pre: [verifyToken, isAdmin],
+      handler: routeController.deleteRoute
+    }
+  }
+];

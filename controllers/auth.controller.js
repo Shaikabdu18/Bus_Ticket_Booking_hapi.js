@@ -16,7 +16,7 @@ exports.register = async (request, h) => {
     } catch (error) {
         console.log(error.message);
         
-      return h.response({ message: 'Error registering user', error }).code(500);
+      return h.response({ message: 'Error registering user' }).code(500);
     }
   };
 

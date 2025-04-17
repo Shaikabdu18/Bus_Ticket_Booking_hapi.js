@@ -1,6 +1,7 @@
 const Hapi = require("@hapi/hapi");
 const sequelize = require("./config/db")
 const authRoutes = require('./routes/auth.routes');
+const routeRoutes = require('./routes/route.route');
 
 require("dotenv").config();
 
@@ -16,6 +17,7 @@ const init = async ()=>{
     })
 
     server.route(authRoutes);
+    server.route(routeRoutes)
 
     try {
         await sequelize.authenticate();
@@ -24,7 +26,7 @@ const init = async ()=>{
         console.error('Unable to connect to the database:', error.message);
       }
       
-    await sequelize.sync({alter :true})
+    await sequelize.sync({force :true})
     
   await server.start();
   console.log(`Server running on ${server.info.uri}`);
