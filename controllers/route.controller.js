@@ -1,4 +1,5 @@
 const Route = require('../models/route.model');
+const { getPagination, formatPaginationData } = require('../utils/pagination');
 
 exports.createRoute = async (request, h) => {
   try {
@@ -13,9 +14,15 @@ exports.createRoute = async (request, h) => {
 
 exports.getAllRoutes = async (request, h) => {
   try {
-    const routes = await Route.findAll();
-    return h.response(routes).code(200);
-  } catch (error) {
+    const { page, limit } = request.query;
+    const { offset, limit: pageSize, page: currentPage } = getPagination(page, limit);
+    const data = await Route.findAndCountAll({
+        offset,
+        limit: pageSize,
+      });
+      const paginatedResponse = formatPaginationData(data, currentPage, pageSize);
+      return h.response(paginatedResponse).code(200);
+    } catch (error) {
     console.error('Error fetching routes:', error);
     return h.response({ error: 'Failed to retrieve routes' }).code(500);
   }

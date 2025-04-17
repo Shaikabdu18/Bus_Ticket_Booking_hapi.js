@@ -1,5 +1,6 @@
 const routeController = require('../controllers/route.controller');
 const { verifyToken, isAdmin } = require('../middleware/auth.middleware');
+const { createRouteSchema, updateRouteSchema } = require('../validations/route.validation');
 
 module.exports = [
   {
@@ -7,7 +8,10 @@ module.exports = [
     path: '/routes',
     options: {
       pre: [verifyToken, isAdmin],
-      handler: routeController.createRoute
+      handler: routeController.createRoute,
+      validate:{
+        payload:createRouteSchema
+      }
     }
   },
   {
@@ -29,7 +33,10 @@ module.exports = [
     path: '/routes/{id}',
     options: {
       pre: [verifyToken, isAdmin],
-      handler: routeController.updateRoute
+      handler: routeController.updateRoute,
+      validate:{
+        payload:updateRouteSchema
+      }
     }
   },
   {

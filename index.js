@@ -26,8 +26,7 @@ const init = async ()=>{
         console.error('Unable to connect to the database:', error.message);
       }
       
-    await sequelize.sync({force :true})
-    
+      await sequelize.sync();    
   await server.start();
   console.log(`Server running on ${server.info.uri}`);
 }
