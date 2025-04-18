@@ -2,6 +2,7 @@ const Hapi = require("@hapi/hapi");
 const sequelize = require("./config/db")
 const authRoutes = require('./routes/auth.routes');
 const routeRoutes = require('./routes/route.route');
+const busRoutes = require("./routes/bus.route")
 
 require("dotenv").config();
 
@@ -18,6 +19,7 @@ const init = async ()=>{
 
     server.route(authRoutes);
     server.route(routeRoutes)
+    server.route(busRoutes)
 
     try {
         await sequelize.authenticate();
