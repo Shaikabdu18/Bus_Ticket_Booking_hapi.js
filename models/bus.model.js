@@ -1,5 +1,6 @@
 const { DataTypes,Model } = require('sequelize');
 const sequelize = require('../config/db');
+const SCHEDULE = require('./schedule.model');
 
 class BUS extends Model {}
 
@@ -33,4 +34,5 @@ BUS.init(
     }
 )
 
+BUS.hasMany(SCHEDULE,{foreignKey:'bus_id',as:"bus_schedule"})
 module.exports = BUS;
