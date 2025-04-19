@@ -78,3 +78,20 @@ exports.deleteSchedule = async (request, h) => {
     return h.response({ error: 'Failed to delete schedule' }).code(500);
   }
 };
+
+exports.searchSchedules = async (request, h) => {
+  const { source, destination, date } = request.query;
+  
+  const route = await Route.findOne({ where: { from: source, to: destination } });
+  if (!route) return h.response({ error: 'Route not found' }).code(404);
+
+  const schedules = await Schedule.findAll({
+    where: {
+      route_id: route.id,
+      date
+    },
+    include: [{ model: BUS }]
+  });
+
+  return h.response(schedules).code(200);
+};

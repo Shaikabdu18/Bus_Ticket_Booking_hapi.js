@@ -4,6 +4,7 @@ const authRoutes = require('./routes/auth.routes');
 const routeRoutes = require('./routes/route.route');
 const busRoutes = require("./routes/bus.route")
 const scheduleRoutes = require("./routes/schedule.route")
+const userRoutes = require("./routes/user.route")
 
 require("dotenv").config();
 
@@ -22,6 +23,7 @@ const init = async ()=>{
     server.route(routeRoutes)
     server.route(busRoutes)
     server.route(scheduleRoutes)
+    server.route(userRoutes)
 
     try {
         await sequelize.authenticate();
@@ -30,7 +32,7 @@ const init = async ()=>{
         console.error('Unable to connect to the database:', error.message);
       }
       
-      await sequelize.sync({ alter: true });
+      await sequelize.sync({ }); 
       await server.start();
   console.log(`Server running on ${server.info.uri}`);
 }
