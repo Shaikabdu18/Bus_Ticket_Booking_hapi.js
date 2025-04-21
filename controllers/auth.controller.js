@@ -5,6 +5,10 @@ const User = require('../models/user.model');
 exports.register = async (request, h) => {
     const { name, email, password, role } = request.payload;
     try {
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser) {
+      return h.response({ message: 'Email already in use' }).code(409);
+      }
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await User.create({
         name,

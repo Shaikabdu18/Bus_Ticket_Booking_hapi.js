@@ -80,18 +80,24 @@ exports.deleteSchedule = async (request, h) => {
 };
 
 exports.searchSchedules = async (request, h) => {
-  const { source, destination, date } = request.query;
-  
-  const route = await Route.findOne({ where: { from: source, to: destination } });
-  if (!route) return h.response({ error: 'Route not found' }).code(404);
+  try {
+    const { source, destination, date } = request.query;
 
-  const schedules = await Schedule.findAll({
-    where: {
-      route_id: route.id,
-      date
-    },
-    include: [{ model: BUS }]
-  });
+    const route = await Route.findOne({ where: { from: source, to: destination } });
+    if (!route) return h.response({ error: 'Route not found' }).code(404);
 
-  return h.response(schedules).code(200);
+    const schedules = await Schedule.findAll({
+      where: {
+        route_id: route.id,
+        date
+      },
+      include: [{ model: BUS }]
+    });
+
+    return h.response(schedules).code(200);
+  } catch (err) {
+    console.error(err);
+    return h.response({ error: 'Failed to search schedules' }).code(500);
+  }
 };
+

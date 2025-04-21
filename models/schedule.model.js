@@ -31,7 +31,11 @@ SCHEDULE.init(
         departure_time: {
             type: DataTypes.TIME,
             allowNull: false
-          }
+          },
+        price:{
+            type:DataTypes.INTEGER,
+            allowNull:false     
+        }
     },
     {
         tableName:"schedule",

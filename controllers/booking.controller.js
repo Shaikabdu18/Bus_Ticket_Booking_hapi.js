@@ -1,6 +1,7 @@
 const Booking = require('../models/booking.model');
 const Schedule = require('../models/schedule.model');
 const Bus = require('../models/bus.model');
+const { Route } = require('../models');
 
 exports.getAvailableSeats = async (request, h) => {
   try {
@@ -56,7 +57,11 @@ exports.getUserBookings = async (request, h) => {
     const user_id = request.user.id;
     const bookings = await Booking.findAll({
       where: { user_id },
-      include: [{ model: Schedule, include: [Bus] }]
+      include: [{ model: Schedule, 
+        include: [
+          { model: Bus },
+          { model: Route } 
+        ], }]
     });
 
     return h.response(bookings).code(200);
