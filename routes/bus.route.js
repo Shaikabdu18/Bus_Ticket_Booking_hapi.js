@@ -24,7 +24,7 @@ module.exports = [
         parse: true,
         allow: 'multipart/form-data',
         multipart: true,
-        maxBytes: 1048576 * 5 // 5MB
+        maxBytes: 1048576 * 5 
       },
       handler: busController.importBulkBuses
     }

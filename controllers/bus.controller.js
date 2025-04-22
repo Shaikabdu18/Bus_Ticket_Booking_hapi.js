@@ -31,8 +31,13 @@ exports.getAllBuses = async (request, h) => {
 };
 
 exports.getBusById = async (request, h) => {
-  const bus = await Bus.findByPk(request.params.id);
-  return bus ? h.response(bus).code(200) : h.response({ error: 'Not found' }).code(404);
+  try {
+    const bus = await Bus.findByPk(request.params.id);
+    return bus ? h.response(bus).code(200) : h.response({ error: 'Not found' }).code(404);
+  } catch (err) {
+    console.error('Database error:', err);
+    return h.response({ error: 'Failed to fetch bus' }).code(500);
+  }
 };
 
 exports.updateBus = async (request, h) => {
@@ -63,6 +68,9 @@ exports.importBulkBuses = async (request, h) => {
     const file = request.payload.file;
     const buses = [];
   
+    if (!file || !file._data || file._data.length === 0) {
+      return h.response({ error: 'CSV file is required and should not be empty.' }).code(400);
+    }
     return new Promise((resolve, reject) => {
       const uploadDir = path.join(__dirname, '../uploads');
       if (!fs.existsSync(uploadDir)) {
