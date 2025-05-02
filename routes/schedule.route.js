@@ -9,9 +9,6 @@ module.exports = [
     options: {
       pre: [verifyToken, isAdmin],
       handler: scheduleController.createSchedule,
-      validate:{
-        payload:scheduleSchema
-      }
     }
   },
   {

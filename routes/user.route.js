@@ -9,7 +9,7 @@ module.exports = [
     path: '/schedules/search',
     options: {
       handler: scheduleController.searchSchedules,
-      validate: { query: scheduleSearchSchema }
+      // validate: { query: scheduleSearchSchema }
     }
   },
   {
@@ -25,7 +25,7 @@ module.exports = [
     options: {
       pre: [verifyToken],
       handler: bookingController.bookSeat,
-      validate: { payload: bookingSchema }
+      // validate: { payload: bookingSchema }
     }
   },
   {

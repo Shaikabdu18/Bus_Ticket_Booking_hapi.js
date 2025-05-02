@@ -8,10 +8,7 @@ module.exports = [
     path: '/routes',
     options: {
       pre: [verifyToken, isAdmin],
-      handler: routeController.createRoute,
-      validate:{
-        payload:createRouteSchema
-      }
+      handler: routeController.createRoute
     }
   },
   {
@@ -33,10 +30,7 @@ module.exports = [
     path: '/routes/{id}',
     options: {
       pre: [verifyToken, isAdmin],
-      handler: routeController.updateRoute,
-      validate:{
-        payload:updateRouteSchema
-      }
+      handler: routeController.updateRoute
     }
   },
   {
