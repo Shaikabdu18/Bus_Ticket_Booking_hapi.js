@@ -9,9 +9,6 @@ module.exports = [
     options: {
       pre: [verifyToken, isAdmin],
       handler: busController.createBus,
-      validate:{
-        payload:createBusSchema
-      }
     }
   },
   {
@@ -49,9 +46,6 @@ module.exports = [
     options: {
       pre: [verifyToken, isAdmin],
       handler: busController.updateBus,
-      validate:{
-        payload:updateBusSchema
-      }
     }
   },
   {
