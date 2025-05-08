@@ -5,6 +5,7 @@ const routeRoutes = require('./routes/route.route');
 const busRoutes = require("./routes/bus.route")
 const scheduleRoutes = require("./routes/schedule.route")
 const userRoutes = require("./routes/user.route")
+const reportRoutes = require("./routes/admin_report.route")
 
 require("dotenv").config();
 
@@ -24,6 +25,7 @@ const init = async ()=>{
     server.route(busRoutes)
     server.route(scheduleRoutes)
     server.route(userRoutes)
+    server.route(reportRoutes)
 
     try {
         await sequelize.authenticate();
